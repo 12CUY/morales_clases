@@ -1,0 +1,90 @@
+import { Component } from '@angular/core';
+import { user } from 'src/app/models/user.interface';
+
+@Component({
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css']
+})
+export class UserComponent {
+  // Declaración de variable
+  people: user;
+  person: any;
+
+  constructor() {
+    // Inicialización de la variable 'people'
+    this.people = {
+      name: "wiliam",
+      age: 2,
+      genderId: 1,
+      genderName: ""
+    };
+
+    // Uso del array 'people' con un objeto
+    const people = [
+      {
+        name: "wiliam",
+        age: 2,
+        genderId: 1,
+        genderName: ""
+      }
+    ];
+
+    // Uso del array map para transformar el objeto 'people'
+    this.person = people.map(person => {
+      // Modificación de 'genderName' basada en la condición
+      if (person.genderId == 1) {
+        person.genderName = "sr";
+      } else {
+        person.genderName = "sra";
+      }
+
+      return person;
+    });
+
+    // Imprimir en la consola el resultado
+    console.log(this.person);
+  }
+
+  // Método para manejar el envío del formulario
+  onSubmit() {
+    console.log('Formulario enviado:', this.people);
+    // Puedes realizar acciones adicionales con los datos del formulario aquí
+  }
+}
+
+
+////////////////////
+
+<p>user works!</p>
+<router-outlet></router-outlet>
+<h1>Bienvenidos</h1>
+
+<div class="container">
+    <h1>Formulario</h1>
+    <form (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="name" [(ngModel)]="people.name" placeholder="Escribe tu nombre" required>
+        </div>
+        <div class="mb-3">
+            <label for="apellido" class="form-label">Apellido</label>
+            <input type="text" class="form-control" id="lastname" [(ngModel)]="people.lastname" placeholder="Escribe tu apellido" required>
+        </div>
+        <!-- Agregué más campos según el modelo 'user' -->
+        <div class="mb-3">
+            <label for="curso" class="form-label">Curso</label>
+            <input type="text" class="form-control" id="curse" [(ngModel)]="people.curse" placeholder="Escribe tu curso" required>
+        </div>
+        <div class="mb-3">
+            <label for="edad" class="form-label">Edad</label>
+            <input type="number" class="form-control" id="date" [(ngModel)]="people.age" placeholder="Escribe tu edad" required>
+        </div>
+        <div class="mb-3">
+            <label for="ciudad" class="form-label">Ciudad</label>
+            <input type="text" class="form-control" id="ciudad" [(ngModel)]="people.city" placeholder="Escribe tu ciudad" required>
+        </div>
+        <!-- Corregí el botón de enviar -->
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+</div>
