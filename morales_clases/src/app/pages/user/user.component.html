@@ -4,19 +4,24 @@
 
     <div class="container">
         <h1>Formulario</h1>
-        <form>
+        <form [FormGroup]="form">
             <div class="mb-3">
-                <label for="nombre" class="form-label">name</label>
+                <label for="name" class="form-label">name</label>
                 <i class="bi bi-airplane-engines-fill"></i>
-                <input type="text" class="form-control" id="name" placeholder="Escribe tu nombre"  required>
+                <input type="text" class="form-control" id="name" placeholder="Escribe tu nombre">
+                {{form.controls['name'].errors|json}}
+                <small class="invalid-danger" *ngif="form.controls['name'].errors && formControls['name'].hasError('required')">
+                    el campo es requerido
+                </small>
             </div>
+            
             <div class="mb-3">
                 <label for="apellido" class="form-label">lastname</label>
-                <input type="text" class="form-control" id="lastname" placeholder="Escribe tu apellido" required>
+                <input type="text" class="form-control" id="lastname" placeholder="Escribe tu apellido" >
             </div>
             <div class="mb-3">
                 <label for="curso" class="form-label">curse</label>
-                <input type="text" class="form-control" id="curse" placeholder="Escribe tu curso" required>
+                <input type="text" class="form-control" id="curse" placeholder="Escribe tu curso" >
             </div>
             <div class="mb-3">
                 <label for="edad" class="form-label">date</label>
