@@ -88,3 +88,47 @@ export class UserComponent {
         <button type="submit" class="btn btn-primary">Enviar</button>
     </form>
 </div>
+
+
+    // declaracion de variable
+    people:user;
+    person:any;
+
+    constructor (){
+        // incializacion de la variable de "people"
+      this.people={
+        name : "wiliam",
+        age :2,
+        genderId : 1,
+        genderName : ""
+      }
+
+    // declaracion de un array people con un objeto
+    const people=[
+    {
+      name : "wiliam",
+      age :2,
+      genderId : 1,
+      genderName : ""
+    }
+
+    ]
+    // uso del array map 
+    //transformar el objeto people
+  this.person = people.map(person => {
+
+      if(person.genderId==1){
+          person.genderName="sr"
+        }
+        else{
+          person.genderName="sra"
+        }
+
+        return person;
+
+
+  })
+ // imprimie la consola el resultado
+  console.log(this.person);
+  }
+
