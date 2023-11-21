@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserComponent } from './user/user.component';
+import { UserComponent } from './pages/user/user.component';
 
 // Definición de las rutas
 const routes: Routes = [
-    { path: '', redirectTo: '/usuario', pathMatch: 'full' },
-    { path: 'usuario', component: UserComponent }
+    { path: '', component: UserComponent},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)], // Configuración de las rutas principales
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

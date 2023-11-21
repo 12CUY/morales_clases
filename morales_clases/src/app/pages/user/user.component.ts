@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-user',
@@ -8,16 +8,24 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class UserComponent {
 
+  userData: any = {};
 
-protected form:FormGroup;
+  constructor(private http: HttpClient) { }
 
-constructor(private formBuilder: FormBuilder) {
-  this.form = this.formBuilder.group({
-    name: [null, [Validators.required, Validators.minLength(3)]], 
-    age: [null, [Validators.required, Validators.minLength(3)]], 
-    genderId: [null, [Validators.required, Validators.minLength(3)]], 
-    genderName: [null, [Validators.required, Validators.minLength(3)]]
-  });
-}
+  submitForm() {
+    console.log('Datos enviados:', this.userData);
 
+    this.http.post('http://localhost:3000/api/user', this.userData)
+      .subscribe(response => {
+        console.log('Respuesta del servidor:', response);
+        // Mostrar un mensaje de éxito al usuario
+        alert('Datos enviados con éxito');
+        // Limpiar el formulario después de enviar con éxito
+        this.userData = {};
+      }, error => {
+        console.error('Error al enviar los datos:', error);
+        // Mostrar un mensaje de error al usuario
+        alert('Error al enviar los datos');
+      });
+  }
 }

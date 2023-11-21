@@ -1,4 +1,4 @@
-export interface  user {
+export interface  usera {
     name : string;
     age :number;
     genderId : number;
