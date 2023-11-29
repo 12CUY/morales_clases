@@ -1,6 +1,8 @@
 export interface  usera {
-    name : string;
-    age :number;
-    genderId : number;
-    genderName : string;
+    nombre?: string;
+    apellido?: string;
+    email?: string;
+    telefono?: string;
+    direccion?: string;
+    genero?: string;
 }  

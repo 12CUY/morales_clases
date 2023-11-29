@@ -2,6 +2,15 @@ import { Component, ViewChild } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 
+interface MensajeError {
+  nombre?: string;
+  apellido?: string;
+  email?: string;
+  telefono?: string;
+  direccion?: string;
+  genero?: string;
+}
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -12,61 +21,51 @@ export class UserComponent {
   @ViewChild('myForm') myForm!: NgForm;
   userData: any = {};
   generos: string[] = ['Masculino', 'Femenino', 'H'];
-  mensajeError: { [key: string]: string } = {};
+  mensajeError: MensajeError = {};
+
+  clearError(field: keyof MensajeError) {
+    this.mensajeError[field] = '';
+  }
+
+  // Función para verificar si un campo es requerido
+  isRequired(field: string): boolean {
+    return this.myForm.controls[field].hasError('required');
+  }
+
+  // Función para verificar validez del campo después de la interacción del usuario
+  validateField(field: keyof MensajeError) {
+    if (this.myForm.controls[field].dirty) {
+      if (this.isRequired(field)) {
+        this.mensajeError[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} es un campo requerido.`;
+      } else if (this.userData[field].length > 10) {
+        this.mensajeError[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} no puede tener más de 10 caracteres.`;
+      } else {
+        this.mensajeError[field] = '';
+      }
+    }
+  }
+
+  // Función para validar el campo de género
+  validateGenero() {
+    if (this.myForm.controls['genero'].dirty) {
+      if (this.isRequired('genero')) {
+        this.mensajeError['genero'] = 'Género es un campo requerido.';
+      } else {
+        this.mensajeError['genero'] = '';
+      }
+    }
+  }
 
   constructor(private http: HttpClient) { }
-// trim: elimina campos
+
   submitForm() {
-    // Verificar la validez del campo 'nombre'
-    if (!this.userData.nombre || this.userData.nombre.trim() === '') {
-      this.mensajeError['nombre'] = 'Nombre es un campo requerido.';
-    } else if (this.userData.nombre.length > 10) {
-      this.mensajeError['nombre'] = 'Nombre no puede tener más de 10 caracteres.';
-    } else {
-      this.mensajeError['nombre'] = ''; // Limpiar el mensaje de error si es válido
-    }
+    this.validateField('nombre');
+    this.validateField('apellido');
+    this.validateField('email');
+    this.validateField('telefono');
+    this.validateField('direccion');
+    this.validateGenero(); // Validar el campo de género
 
-    // Verificar la validez del campo 'apellido'
-    if (!this.userData.apellido || this.userData.apellido.trim() === '') {
-      this.mensajeError['apellido'] = 'Apellido es un campo requerido.';
-    } else if (this.userData.apellido.length > 10) {
-      this.mensajeError['apellido'] = 'Apellido no puede tener más de 10 caracteres.';
-    } else {
-      this.mensajeError['apellido'] = ''; // Limpiar el mensaje de error si es válido
-    }
-
-      // Verificar la validez del campo 'email'
-      if (!this.userData.email || this.userData.email.trim() === '') {
-        this.mensajeError['email'] = 'email es un campo requerido.';
-      } else if (this.userData.apellido.length > 10) {
-        this.mensajeError['email'] = 'email no puede tener más de 10 caracteres.';
-      } else {
-        this.mensajeError['email'] = ''; // Limpiar el mensaje de error si es válido
-      }
-
-      // Verificar la validez del campo 'telefono'
-      if (!this.userData.telefono || this.userData.telefono.trim() === '') {
-        this.mensajeError['telefono'] = 'telefono es un campo requerido.';
-      } else if (this.userData.apellido.length > 10) {
-        this.mensajeError['telefono'] = 'telefono no puede tener más de 10 caracteres.';
-      } else {
-        this.mensajeError['telefono'] = ''; // Limpiar el mensaje de error si es válido
-      }
-      
-     // Verificar la validez del campo 'direccion'
-    if (!this.userData.direccion || this.userData.direccion.trim() === '') {
-      this.mensajeError['direccion'] = 'direccion es un campo requerido.';
-    } else if (this.userData.apellido.length > 10) {
-      this.mensajeError['direccion'] = 'direccion no puede tener más de 10 caracteres.';
-    } else {
-      this.mensajeError['direccion'] = ''; // Limpiar el mensaje de error si es válido
-    }
-
-
-
-
-
-    // Verificar si el formulario es válido
     if (this.myForm.valid) {
       console.log('Datos enviados:', this.userData);
 
