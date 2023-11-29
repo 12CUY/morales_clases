@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class UserComponent {
 
   userData: any = {};
-
+  generos: string[] = ['Masculino', 'Femenino', 'H'];
   constructor(private http: HttpClient) { }
 
   submitForm() {

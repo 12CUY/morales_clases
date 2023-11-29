@@ -22,9 +22,9 @@ app.post('/api/user', (req, res) => {
   const userData = req.body;
 
   connection.query(
-    'INSERT INTO formulario (nombre, apellido, email, telefono, direccion) VALUES (?, ?, ?, ?, ?)',
-    [userData.nombre, userData.apellido, userData.email, userData.telefono, userData.direccion],
-    (error, results, fields) => {
+    'INSERT INTO formulario (nombre, apellido, email, telefono, direccion, sexo) VALUES (?, ?, ?, ?, ?, ?)',
+    [userData.nombre, userData.apellido, userData.email, userData.telefono, userData.direccion, userData.genero ],
+    (error, results) => {
       if (error) throw error;
       console.log('Datos insertados en la base de datos:', results);
     }
