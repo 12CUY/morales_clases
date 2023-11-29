@@ -2,32 +2,46 @@
   <br>
   <h2>Formulario</h2>
   <!--atributos -->
-  <form (submit)="submitForm()">
+  <form (submit)="submitForm()" #myForm="ngForm">
     <div class="mb-3">
       <label for="nombre" class="form-label">Nombre:</label>
       <input type="text" class="form-control" id="nombre" [(ngModel)]="userData.nombre" name="nombre" placeholder="Ingresa tu Nombre">
+      <div *ngIf="mensajeError['nombre']" class="alert alert-danger">
+        {{ mensajeError['nombre'] }}
+      </div>
     </div>
 
     <div class="mb-3">
       <label for="apellido" class="form-label">Apellido:</label>
       <input type="text" class="form-control" id="apellido" [(ngModel)]="userData.apellido" name="apellido" placeholder="Ingresa tu Apellido">
+      <div *ngIf="mensajeError['apellido']" class="alert alert-danger">
+        {{ mensajeError['apellido'] }}
+      </div>
     </div>
 
     <div class="mb-3">
       <label for="email" class="form-label">Email:</label>
       <input type="email" class="form-control" id="email" [(ngModel)]="userData.email" name="email" placeholder="Ingresa tu Email ">
+      <div *ngIf="mensajeError['nombre']" class="alert alert-danger">
+        {{ mensajeError['email'] }}
+      </div>
     </div>
 
     <div class="mb-3">
       <label for="telefono" class="form-label">Teléfono:</label>
-      <input type="tel" class="form-control" id="telefono" [(ngModel)]="userData.telefono" name="telefono" placeholder="Ingresa tu telefono">
+      <input type="number" class="form-control" id="telefono" [(ngModel)]="userData.telefono" name="telefono" placeholder="Ingresa tu telefono">
+      <div *ngIf="mensajeError['telefono']" class="alert alert-danger">
+        {{ mensajeError['telefono'] }}
+      </div>
     </div>
 
     <div class="mb-3">
       <label for="direccion" class="form-label">Dirección:</label>
       <input type="text" class="form-control" id="direccion" [(ngModel)]="userData.direccion" name="direccion" placeholder="Ingresa tu Dirección">
+      <div *ngIf="mensajeError['direccion']" class="alert alert-danger">
+        {{ mensajeError['direccion'] }}
+      </div>
     </div>
-
 
     <div class="mb-3">
       <label for="genero" class="form-label">Género:</label>
@@ -36,7 +50,10 @@
       </select>
     </div>
 
-    
     <button type="submit" class="btn btn-primary">Enviar</button>
+
+    <div *ngIf="mensajeError" class="alert alert-danger">
+      {{ mensajeError }}
+    </div>
   </form>
 </div>
